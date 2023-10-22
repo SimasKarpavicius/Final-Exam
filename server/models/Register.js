@@ -7,11 +7,3 @@ const RegisterSchema = new mongoose.Schema ({
 
 const RegisterModel = mongoose.model("register", RegisterSchema)
 module.exports = RegisterModel;
-
-const PostSchema = new mongoose.Schema ({
-    title: String,
-    description: String,
-})
-
-const PostModel = mongoose.model("post", PostSchema)
-module.exports = PostModel;

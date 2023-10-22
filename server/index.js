@@ -3,7 +3,6 @@ const cors = require("cors");
 const mongoose  = require("mongoose");
 require("dotenv").config();
 const RegisterModel = require('./models/Register')
-const PostModel = require('./models/Register')
 
 const app = express()
 app.use(cors())
@@ -12,11 +11,6 @@ app.use(express.json())
 const port = process.env.PORT || 8080;
 const URI = process.env.DB_CONNECTION_STRING;
 const client = mongoose.connect(URI);
-
-// const users = [];
-// const threadList = [];
-
-const generateID = () => Math.random().toString(36).substring(2, 10);
 
 app.post("/login", (req, res)=>{
   const {email, password} = req.body;
@@ -46,14 +40,6 @@ app.post('/register', (req, res) =>{
     }
   }).catch(err => res.status(500).json(err));
 })
-
-app.post("/api/create/thread", async (req, res) => {
-  const {thread, userId} = req.body;
-  const threadId = generateID();
-
-  console.log({thread, userId, threadId});
-}
-)
 
 app.listen(port, () => {
   console.log(`server is running on http://localhost:${port}`)
