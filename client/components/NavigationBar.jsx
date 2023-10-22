@@ -54,7 +54,7 @@ const NavigationBar = () => {
               </Link>
             )
         )}
-        {isLoggedIn && (
+        {isLoggedIn && user && (
           <>
             <Name>{user.email}</Name>
             <LogoutIcon fontSize={24} onClick={handleLogout} />

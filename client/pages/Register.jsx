@@ -52,10 +52,10 @@ const Register = () => {
         }}
         onSubmit={handleSubmit}
         validationSchema={Yup.object({
-          email: Yup.string().required("Required").email(),
-          password: Yup.string().required("Required").min(8),
+          email: Yup.string().required("Email is required").email(),
+          password: Yup.string().required("Password is required").min(8),
           repeatedPassword: Yup.string()
-            .required("Required")
+            .required("Repeated password is required")
             .oneOf([Yup.ref("password")], "Passwords do not match"),
         })}
       >

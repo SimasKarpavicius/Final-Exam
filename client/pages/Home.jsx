@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { UserContext } from "../contexts/UserContext";
 import Button from "../components/Button";
 import { NEW_FORUM_TOPIC } from "../routes/const";
 
@@ -16,13 +18,17 @@ const ActionBar = styled.div`
 `;
 
 const Home = () => {
+  const { isLoggedIn } = useContext(UserContext);
+
   return (
     <Container>
       <ActionBar>
-        <h1>List of topics to discuss</h1>
-        <Link to={NEW_FORUM_TOPIC}>
-          <Button>Make a forum topic</Button>
-        </Link>
+        <h1>List of forum topics to discuss</h1>
+        {isLoggedIn && (
+          <Link to={NEW_FORUM_TOPIC}>
+            <Button variant="contained">Make a forum topic</Button>
+          </Link>
+        )}
       </ActionBar>
     </Container>
   );

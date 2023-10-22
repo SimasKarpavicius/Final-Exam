@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useContext, useState } from "react";
 import FormikField from "../components/FormikField";
 import Button from "../components/Button";
-import axios from "axios";
 import { HOME_PATH } from "../routes/const";
-import { useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
 
 const Container = styled.div`
@@ -66,8 +66,8 @@ const Login = () => {
         }}
         onSubmit={handleSubmit}
         validationSchema={Yup.object({
-          email: Yup.string().required("Required").email(),
-          password: Yup.string().required("Required").min(8),
+          email: Yup.string().required("Email is required").email(),
+          password: Yup.string().required("Password is required").min(8),
         })}
       >
         <Form>
