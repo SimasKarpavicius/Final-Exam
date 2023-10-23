@@ -50,9 +50,31 @@ app.get('/topics', (req, res) =>{
 
 app.post('/topics', (req, res) =>{
   const { title, description, author } = req.body;
-  TopicModel.create({title, description, author})
+  const answers = [];
+  TopicModel.create({title, description, author, answers })
   .then(result => res.json("Topic created"))
   .catch(err => res.status(500).json(err));
+})
+
+app.get('/topics/:topicId', (req, res) =>{
+  TopicModel.findById(req.params.topicId)
+  .then(topic => res.json(topic))
+  .catch(err => res.status(500).json(err));
+})
+
+app.post('/topics/:topicId/answers', (req, res) =>{
+  const { description, author } = req.body;
+  TopicModel.findById(req.params.topicId)
+  .then(async topic => {
+    const answer = {description, author, author: 'john@doe.com', likes: 0, dislikes: 0};
+    if (!topic.answers) {
+      topic.answers = [];
+    }
+    topic.answers.push(answer);
+    await topic.save();
+    res.json("Answer saved");
+  })
+  .catch(err => res.status(500).json(err))
 })
 
 app.listen(port, () => {

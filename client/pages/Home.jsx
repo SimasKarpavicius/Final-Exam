@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "../contexts/UserContext";
 import Button from "../components/Button";
-import { NEW_FORUM_TOPIC } from "../routes/const";
+import { NEW_FORUM_TOPIC, TOPIC_PATH } from "../routes/const";
 import { getTopics } from "../api/topic.js";
 import { isEmpty } from "lodash";
 import { useEffectOnce } from "../hooks/useEffectOnce.js";
@@ -37,7 +37,9 @@ const Home = () => {
     const { title, description } = topic;
     return (
       <div key={title}>
-        <h2>{title}</h2>
+        <Link to={TOPIC_PATH.replace(":topicId", topic._id)}>
+          <h2>{title}</h2>
+        </Link>
         <p>{description}</p>
       </div>
     );
