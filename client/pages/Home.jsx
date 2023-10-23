@@ -5,7 +5,7 @@ import { UserContext } from "../contexts/UserContext";
 import Button from "../components/Button";
 import { NEW_FORUM_TOPIC } from "../routes/const";
 import { getTopics } from "../api/topic.js";
-import _, { isEmpty } from "lodash";
+import { isEmpty } from "lodash";
 import { useEffectOnce } from "../hooks/useEffectOnce.js";
 
 const Container = styled.div`
@@ -35,11 +35,10 @@ const Home = () => {
 
   const topicsJsx = topics.map((topic) => {
     const { title, description } = topic;
-    const abbreviatedDescription = _.truncate(description, { length: 100 });
     return (
       <div key={title}>
         <h2>{title}</h2>
-        <p>{abbreviatedDescription}</p>
+        <p>{description}</p>
       </div>
     );
   });
