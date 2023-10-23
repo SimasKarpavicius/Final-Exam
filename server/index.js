@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose  = require("mongoose");
 require("dotenv").config();
 const RegisterModel = require('./models/Register')
+const TopicModel = require('./models/Topic')
 
 const app = express()
 app.use(cors())
@@ -39,6 +40,19 @@ app.post('/register', (req, res) =>{
       .catch(err => res.status(500).json(err));
     }
   }).catch(err => res.status(500).json(err));
+})
+
+app.get('/topics', (req, res) =>{
+  TopicModel.find()
+  .then(topic => res.json(topic))
+  .catch(err => res.status(500).json(err));
+})
+
+app.post('/topics', (req, res) =>{
+  const { title, description, author } = req.body;
+  TopicModel.create({title, description, author})
+  .then(result => res.json("Topic created"))
+  .catch(err => res.status(500).json(err));
 })
 
 app.listen(port, () => {

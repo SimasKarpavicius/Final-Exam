@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { HOME_PATH } from "../routes/const";
 import FormikField from "../components/FormikField";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
 import Button from "../components/Button";
 import { newForumTopic } from "../api/topic";
@@ -27,6 +27,11 @@ const ErrorMessage = styled.h2`
   text-align: center;
 `;
 
+const Error = styled.p`
+  color: red;
+  margin-bottom: 1rem;
+`;
+
 const StyledForm = styled(Form)`
   display: flex;
   flex-direction: column;
@@ -36,17 +41,19 @@ const StyledForm = styled(Form)`
 const validationSchema = Yup.object({
   title: Yup.string().required("Title is required").min(3),
   description: Yup.string().required("Description is required"),
-  userId: Yup.number().required("Required"), // gal object id turetu eit
 });
 
 const NewForumTopic = () => {
+  const [error, setError] = useState("");
   const { user, isLoggedIn } = useContext(UserContext);
   const navigate = useNavigate();
+
   const handleSubmit = async (values) => {
     try {
       await newForumTopic(values);
       navigate(HOME_PATH);
     } catch (error) {
+      setError;
       console.log(error);
     }
   };
@@ -84,6 +91,7 @@ const NewForumTopic = () => {
             rows={3}
             required
           />
+          {error && <Error>{error}</Error>}
           <Button type="submit">Submit your topic</Button>
         </StyledForm>
       </Formik>
