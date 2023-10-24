@@ -66,7 +66,7 @@ app.post('/topics/:topicId/answers', (req, res) =>{
   const { description, author } = req.body;
   TopicModel.findById(req.params.topicId)
   .then(async topic => {
-    const answer = {description, author, author: 'john@doe.com', likes: 0, dislikes: 0};
+    const answer = {description, author, author: "", likes: 0, dislikes: 0};
     if (!topic.answers) {
       topic.answers = [];
     }

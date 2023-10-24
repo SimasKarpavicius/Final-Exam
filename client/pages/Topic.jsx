@@ -20,6 +20,11 @@ const ActionBar = styled.div`
   margin-bottom: 1rem;
 `;
 
+const ErrorMessage = styled.h2`
+  margin-top: 1rem;
+  text-align: center;
+`;
+
 const Topic = () => {
   const { topicId } = useParams();
   const { isLoggedIn } = useContext(UserContext);
@@ -28,19 +33,20 @@ const Topic = () => {
   const refreshTopic = useCallback(async () => {
     const response = await getTopic(topicId);
     setTopic(response);
-  }, [topicId]);
+  }, []);
 
   useEffectOnce(() => {
     refreshTopic();
   });
 
   const answersJsx = topic?.answers?.map((answer) => {
-    const { description, likes, dislikes } = answer;
+    const { description, author, likes, dislikes } = answer;
     return (
       <div key={description}>
         <p>{description}</p>
         <div>
           <ul>
+            <li>Author: {author} </li>
             <li>Likes: {likes} </li>
             <li>Dislikes: {dislikes}</li>
           </ul>
@@ -65,11 +71,7 @@ const Topic = () => {
         )}
       </ActionBar>
       {isLoggedIn && !isEmpty(topic.answers) && answersJsx}
-      {isLoggedIn && isEmpty(topic.answers) && (
-        <div>
-          <p>There are no answers to this topic. Be first to answer!</p>
-        </div>
-      )}
+      <ErrorMessage>Please log in before adding new forum answer</ErrorMessage>
       {isLoggedIn && (
         <Link to={NEW_ANSWER_PATH.replace(":topicId", topicId)}>
           <Button variant="contained">Write a reply</Button>
