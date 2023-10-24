@@ -28,21 +28,20 @@ const Topic = () => {
   const refreshTopic = useCallback(async () => {
     const response = await getTopic(topicId);
     setTopic(response);
-  }, []);
+  }, [topicId]);
 
   useEffectOnce(() => {
     refreshTopic();
   });
 
   const answersJsx = topic?.answers?.map((answer) => {
-    const { description, author, likes, dislikes } = answer;
+    const { description, likes, dislikes } = answer;
     return (
       <div key={description}>
         <p>{description}</p>
         <div>
           <ul>
-            <li>Author: {author}</li>
-            <li>Likes: {likes}</li>
+            <li>Likes: {likes} </li>
             <li>Dislikes: {dislikes}</li>
           </ul>
         </div>
